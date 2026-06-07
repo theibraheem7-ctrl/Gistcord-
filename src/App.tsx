@@ -51,7 +51,13 @@ export default function App() {
 
   // Ibrahim Umar's Contact Address and Editing States
   const [contactAddress, setContactAddress] = useState<string>(() => {
-    return localStorage.getItem("gistcord_contact_address") || "Central Business District, Abuja, FCT, Nigeria";
+    const rawVal = localStorage.getItem("gistcord_contact_address");
+    const oldDefault = "Central Business District, Abuja, FCT, Nigeria";
+    const fullNewDefault = "Suite 302, 3rd Floor, Grand Bilal Plaza, Plot 1042, Constitution Avenue, Central Business District, Abuja, FCT, 900211, Nigeria";
+    if (!rawVal || rawVal === oldDefault) {
+      return fullNewDefault;
+    }
+    return rawVal;
   });
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [addressInput, setAddressInput] = useState(contactAddress);
@@ -630,43 +636,56 @@ export default function App() {
             </div>
           </div>
 
-          <nav className="flex items-center gap-1 bg-[#10161f] border border-white/5 p-1 rounded-xl">
-            <button
-              onClick={() => setActiveTab("dashboard")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-                activeTab === "dashboard"
-                  ? "bg-slate-800 text-amber-400 font-bold shadow-sm"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
+          <div className="flex items-center gap-3">
+            <nav className="flex items-center gap-1 bg-[#10161f] border border-white/5 p-1 rounded-xl">
+              <button
+                onClick={() => setActiveTab("dashboard")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
+                  activeTab === "dashboard"
+                    ? "bg-slate-800 text-amber-400 font-bold shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                Interactive Hub
+              </button>
+              <button
+                onClick={() => setActiveTab("academy")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
+                  activeTab === "academy"
+                    ? "bg-slate-800 text-amber-400 font-bold shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                Growth Academy
+              </button>
+              <button
+                onClick={() => setActiveTab("planner")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all relative ${
+                  activeTab === "planner"
+                    ? "bg-slate-800 text-amber-400 font-bold shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                Scholar Workboard
+                {savedOpportunities.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-amber-500 text-slate-950 text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {savedOpportunities.length}
+                  </span>
+                )}
+              </button>
+            </nav>
+
+            {/* HIGHLY VISIBLE Direct Email Trigger button */}
+            <a
+              href="mailto:theibraheem7@gmail.com"
+              className="hidden md:flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-lg shadow-amber-500/10 border border-amber-400/20 group hover:scale-[1.02]"
+              id="top-bar-email-btn"
+              title="Mail Ibrahim Umar directly"
             >
-              Interactive Hub
-            </button>
-            <button
-              onClick={() => setActiveTab("academy")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
-                activeTab === "academy"
-                  ? "bg-slate-800 text-amber-400 font-bold shadow-sm"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              Growth Academy
-            </button>
-            <button
-              onClick={() => setActiveTab("planner")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all relative ${
-                activeTab === "planner"
-                  ? "bg-slate-800 text-amber-400 font-bold shadow-sm"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-            >
-              Scholar Workboard
-              {savedOpportunities.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-amber-500 text-slate-950 text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  {savedOpportunities.length}
-                </span>
-              )}
-            </button>
-          </nav>
+              <Mail className="w-4 h-4 text-slate-950 group-hover:scale-110 transition-all" />
+              <span className="font-bold italic">theibraheem7@gmail.com</span>
+            </a>
+          </div>
         </div>
       </header>
 
@@ -1511,9 +1530,41 @@ export default function App() {
                 </div>
 
                 {!isEditingAddress ? (
-                  <p className="text-xs text-slate-200 leading-relaxed font-sans font-medium select-all">
-                    {contactAddress}
-                  </p>
+                  <div className="space-y-3" id="full-contact-address-display">
+                    {/* Unbroken fully copyable address string */}
+                    <p className="text-xs text-white leading-relaxed font-sans font-bold select-all bg-slate-950/45 px-3 py-2.5 rounded-xl border border-white/5 flex items-start gap-2">
+                      <span className="text-rose-400 font-mono select-none mt-0.5">•</span>
+                      <span>{contactAddress}</span>
+                    </p>
+                    
+                    {/* Highly descriptive structured metadata layout */}
+                    <div className="pt-2.5 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-[11px]" id="structured-address-matrix">
+                      <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
+                        <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Suite / Floor:</span>
+                        <span className="text-slate-300 font-semibold truncate">Suite 302, 3rd Floor</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
+                        <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Building:</span>
+                        <span className="text-slate-300 font-semibold truncate">Grand Bilal Plaza</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
+                        <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Street/Plot:</span>
+                        <span className="text-slate-300 font-semibold truncate">Plot 1042, Constitution Avenue</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
+                        <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">District:</span>
+                        <span className="text-slate-300 font-semibold truncate">Central Business District</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
+                        <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">City & FCT:</span>
+                        <span className="text-slate-300 font-semibold truncate">Abuja, Federal Capital Territory</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
+                        <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Postal Code:</span>
+                        <span className="text-slate-300 font-mono font-bold">900211</span>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <form
                     onSubmit={(e) => {
@@ -1638,17 +1689,26 @@ export default function App() {
                   </div>
                 </a>
 
-                {/* Email Badge */}
+                {/* Email Badge (Highlighted with custom amber accents & full row span) */}
                 <a
                   href="mailto:theibraheem7@gmail.com"
-                  className="px-4 py-2.5 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 hover:border-indigo-500/40 text-indigo-300 font-semibold text-xs rounded-xl flex items-center gap-2.5 transition-all group cursor-pointer"
+                  className="col-span-2 sm:col-span-3 lg:col-span-2 px-5 py-4 bg-amber-500/10 hover:bg-amber-500/20 border-2 border-amber-500/30 hover:border-amber-400 text-amber-300 font-bold text-xs rounded-2xl flex flex-col items-center justify-center gap-3 transition-all group cursor-pointer shadow-xl shadow-amber-500/5 mt-2"
+                  id="footer-email-highlighted-btn"
                 >
-                  <div className="p-1 rounded bg-indigo-900/40 border border-indigo-400/20">
-                    <Mail className="w-3.5 h-3.5 text-indigo-400" />
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-lg bg-amber-500/20 border border-amber-400/30">
+                      <Mail className="w-4 h-4 text-amber-400 animate-pulse" />
+                    </div>
+                    <span className="text-[10px] uppercase font-mono bg-amber-400 text-slate-950 font-extrabold px-3 py-1.5 rounded-xl shrink-0 group-hover:scale-105 transition-all flex items-center gap-1">
+                      Compose Mail ✉
+                    </span>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-[8.5px] text-slate-400 font-medium leading-none uppercase tracking-wider mb-0.5">Email</div>
-                    <div className="truncate text-[10.5px] font-mono font-bold leading-none">theibraheem7@gmail.com</div>
+                  
+                  <div className="text-center">
+                    <div className="text-[9px] text-amber-400/80 font-extrabold leading-none uppercase tracking-widest mb-1.5">Primary Email Desk</div>
+                    <div className="text-xs md:text-sm font-mono leading-none tracking-wider text-white font-extrabold italic select-all whitespace-nowrap">
+                      theibraheem7@gmail.com
+                    </div>
                   </div>
                 </a>
 
