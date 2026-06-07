@@ -53,8 +53,9 @@ export default function App() {
   const [contactAddress, setContactAddress] = useState<string>(() => {
     const rawVal = localStorage.getItem("gistcord_contact_address");
     const oldDefault = "Central Business District, Abuja, FCT, Nigeria";
-    const fullNewDefault = "Suite 302, 3rd Floor, Grand Bilal Plaza, Plot 1042, Constitution Avenue, Central Business District, Abuja, FCT, 900211, Nigeria";
-    if (!rawVal || rawVal === oldDefault) {
+    const previousNewDefault = "Suite 302, 3rd Floor, Grand Bilal Plaza, Plot 1042, Constitution Avenue, Central Business District, Abuja, FCT, 900211, Nigeria";
+    const fullNewDefault = "House No: 8, Amusco plaza, River Niger, Galadimawa Area, Abuja, Federal Capital Territory, 900211, Nigeria";
+    if (!rawVal || rawVal === oldDefault || rawVal === previousNewDefault) {
       return fullNewDefault;
     }
     return rawVal;
@@ -1541,19 +1542,19 @@ export default function App() {
                     <div className="pt-2.5 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-[11px]" id="structured-address-matrix">
                       <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
                         <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Suite / Floor:</span>
-                        <span className="text-slate-300 font-semibold truncate">Suite 302, 3rd Floor</span>
+                        <span className="text-slate-300 font-semibold truncate">House No: 8</span>
                       </div>
                       <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
                         <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Building:</span>
-                        <span className="text-slate-300 font-semibold truncate">Grand Bilal Plaza</span>
+                        <span className="text-slate-300 font-semibold truncate">Amusco plaza</span>
                       </div>
                       <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
                         <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">Street/Plot:</span>
-                        <span className="text-slate-300 font-semibold truncate">Plot 1042, Constitution Avenue</span>
+                        <span className="text-slate-300 font-semibold truncate">River Niger</span>
                       </div>
                       <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
                         <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">District:</span>
-                        <span className="text-slate-300 font-semibold truncate">Central Business District</span>
+                        <span className="text-slate-300 font-semibold truncate">Galadimawa Area</span>
                       </div>
                       <div className="flex items-center gap-2 bg-white/[0.01] px-2 py-1 rounded-lg border border-white/[0.02]">
                         <span className="text-slate-500 font-extrabold uppercase tracking-widest font-mono text-[8.5px] w-20 shrink-0">City & FCT:</span>
