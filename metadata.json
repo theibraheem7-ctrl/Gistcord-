@@ -1,0 +1,6 @@
+{
+  "name": "Gistcord",
+  "description": "A modern visual information portal and youth empowerment hub offering side hustle ideas, remote school opportunities, AI updates, health guidelines, NGO directories, football match updates, scholarships, mentorship resources, and digital literacy tools with an integrated Gemini conversational helper.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
